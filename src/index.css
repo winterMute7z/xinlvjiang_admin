@@ -1,0 +1,189 @@
+@import 'tailwindcss';
+
+/* Visual tokens mirror the mini-program prototype ("品牌数据舱" soft blue). */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'Helvetica Neue', sans-serif;
+  --font-num: 'SF Pro Display', -apple-system, 'DIN Alternate', 'Helvetica Neue', sans-serif;
+
+  --color-brand: #5b91bd;
+  --color-brand-light: #9cc0dd;
+  --color-brand-soft: #dbe7f3;
+  --color-brand-ink: #36668f;
+  --color-brand-deep: #3e6f98;
+  --color-page: #e7eff8;
+  --color-card: #eef4fa;
+  --color-ink: #182a49;
+  --color-muted: #566a86;
+  --color-line: #d6e1ee;
+  --color-highlight: #fff;
+  --color-success: #1e7160;
+  --color-success-soft: #dcefea;
+  --color-warning: #835610;
+  --color-warning-soft: #f3ead9;
+  --color-danger: #b23f51;
+  --color-danger-soft: #f6e1e5;
+
+  --text-display: 30px;
+  --text-display--line-height: 1.1;
+  --text-title: 22px;
+  --text-title--line-height: 1.25;
+  --text-section: 16px;
+  --text-section--line-height: 1.35;
+  --text-body: 14px;
+  --text-body--line-height: 1.5;
+  --text-caption: 12px;
+  --text-caption--line-height: 1.45;
+  --text-micro: 11px;
+  --text-micro--line-height: 1.35;
+
+  --radius-card: 20px;
+  --radius-control: 14px;
+  --radius-chip: 10px;
+
+  --shadow-raised: 5px 5px 12px #cad7e7, -5px -5px 12px #fff;
+  --shadow-raised-sm: 3px 3px 7px #cad7e7, -3px -3px 7px #fff;
+  --shadow-inset: inset 4px 4px 9px #cad7e7, inset -4px -4px 9px #fff;
+  --shadow-inset-sm: inset 2px 2px 5px #cad7e7, inset -2px -2px 5px #fff;
+  --shadow-surface: 8px 8px 20px #cad7e7bf, -8px -8px 20px #ffffffd9;
+  --shadow-primary: 5px 5px 12px #3e6f9852, -4px -4px 10px #fff, inset 1px 1px 0 #ffffff38;
+  --shadow-primary-pressed: inset 3px 3px 6px #2b557a80, inset -2px -2px 5px #ffffff26;
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-brand-soft);
+  }
+  :focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-brand) 55%, transparent);
+    outline-offset: 2px;
+  }
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+@utility font-num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility soft-orb {
+  background: radial-gradient(circle at 35% 30%, #c4dbee 0%, var(--color-brand) 70%);
+  border-radius: 9999px;
+  box-shadow: 4px 4px 10px #cad7e7, -4px -4px 10px #fff;
+}
+
+@utility press {
+  transition:
+    box-shadow 0.16s ease-out,
+    transform 0.16s ease-out,
+    background-color 0.16s ease-out,
+    color 0.16s ease-out;
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--color-line) 0%, var(--color-card) 50%, var(--color-line) 100%);
+  background-size: 400px 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+@utility live-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@utility page-in {
+  animation: page-in 0.24s ease-out;
+}
+
+@utility pop-in {
+  animation: pop-in 0.2s ease-out;
+}
+
+@utility drawer-in {
+  animation: drawer-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-light) transparent;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  to {
+    background-position: 200px 0;
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes page-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.97) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes drawer-in {
+  0% {
+    opacity: 0.4;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .live-dot,
+  .page-in,
+  .pop-in,
+  .drawer-in {
+    animation: none;
+  }
+  .press:active {
+    transform: none;
+  }
+}
